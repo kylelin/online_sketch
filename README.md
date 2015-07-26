@@ -1,5 +1,6 @@
-#### Dimension Reduction using Frequent Direction
+### Dimension Reduction using Frequent Direction
 Implements [matrix sketching] using octave, two data sets are used for test.
+
 - `handwriting digits`, \in R^{7291 \times 256}, dimension reduction
 - `Random data`, instance sketching
 
@@ -37,7 +38,13 @@ If you compare the frequent directions between `16` and `10`, it can also explai
 
 ![10-digits][digit_10]
 
+As mentioned by the sketching paper, Original matrix `A` \in R^{n \times m} could be skeched row by row in stream style. The sketched matrix `B` \in R^{\ell \times m} follows $0 \preceq B^TB \preceq A^TA$.
+Inspired by this, if we decompose `B` to $B = CX$, where `X` \in R^{k \times m} is `k` most representative directions. The author of sketching paper used SVD for decomposing `B` like $[U,\Sigma,V] = SVD(B)$ and
+`U^TU = V^TV = VV^T = I_\ell`(I_\ell stands for the \ell \times \ell identity matrix). It is a implicit condition that `\ell < m`.
+
 ##### Instance sketching
+In some cases, we may know `X` as pre-knowledge and a streamed `A`, where `A_i`(i-th row of A) selected from `X_i`(i \in 1,2,3...k). At any time `t`, if we obtain `B_t` from stream, then `C_t` shows how `X` contributes
+to `B_t` at time `t`.
 
 [matrix sketching]:http://www.cs.yale.edu/homes/el327/papers/simpleMatrixSketching.pdf
 [digits]:figures/digits_12_8.png
